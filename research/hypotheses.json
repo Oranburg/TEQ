@@ -1,0 +1,102 @@
+[
+  {
+    "id": "H-001",
+    "name": "Short Title Advantage",
+    "description": "Shorter titles (lower word_count) are associated with higher citation counts.",
+    "null_hypothesis": "Title word count has no association with citation count after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "negative",
+    "features": ["word_count"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-002",
+    "name": "Colon Signal",
+    "description": "Titles containing a colon (subtitle structure) predict higher citation counts.",
+    "null_hypothesis": "Colon presence in the title has no association with citation count after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "positive",
+    "features": ["has_colon"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-003",
+    "name": "Question Mark Penalty",
+    "description": "Titles ending in a question mark predict lower citation counts (Betteridge's law applied to legal scholarship).",
+    "null_hypothesis": "Question mark presence in the title has no association with citation count after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "negative",
+    "features": ["has_question_mark"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-004",
+    "name": "Case Name Citation Boost",
+    "description": "Titles containing a case name (v. construction) predict higher citation counts, signaling doctrinal utility.",
+    "null_hypothesis": "Case name presence in the title has no association with citation count after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "positive",
+    "features": ["has_case_name"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-005",
+    "name": "Legal Density × Journal Type Interaction",
+    "description": "Higher legal term density predicts higher citations in specialty journals but not in general journals (audience-matching hypothesis).",
+    "null_hypothesis": "The interaction between legal_term_density and journal_type has no association with citation count after controlling for their main effects and other covariates.",
+    "direction": "interaction",
+    "features": ["legal_term_density", "journal_type"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-006",
+    "name": "Neologism Download Premium",
+    "description": "Titles containing neologisms predict higher SSRN download counts but not higher citation counts. Novelty attracts reader attention but not doctrinal reliance.",
+    "null_hypothesis": "Neologism presence in the title has no association with SSRN downloads or citation count after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "positive",
+    "features": ["has_neologism"],
+    "dependent_variable": "downloads_ssrn",
+    "status": "registered"
+  },
+  {
+    "id": "H-007",
+    "name": "Rethinking vs. The X of Y Template",
+    "description": "Titles using the 'Rethinking X' template predict lower citations than titles using the 'The X of Y' template. 'Rethinking' signals incremental critique; 'The X of Y' signals foundational treatment.",
+    "null_hypothesis": "There is no difference in citation counts between articles using the tmpl_rethinking_x template and those using the tmpl_the_x_of_y template after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "negative",
+    "features": ["tmpl_rethinking_x", "tmpl_the_x_of_y"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-008",
+    "name": "Provocative Title Effect",
+    "description": "Provocative titles predict higher SSRN downloads but lower citation counts. Provocation attracts initial attention but may reduce perceived scholarly reliability.",
+    "null_hypothesis": "Provocative language in the title has no association with SSRN downloads or citation count after controlling for journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "positive",
+    "features": ["is_provocative"],
+    "dependent_variable": "downloads_ssrn",
+    "status": "registered"
+  },
+  {
+    "id": "H-009",
+    "name": "Novelty Curvilinearity",
+    "description": "Title novelty (TF-IDF uniqueness relative to the corpus) has a curvilinear (inverted-U) relationship with citations. Moderate novelty is optimal; highly unique titles are inaccessible to audiences.",
+    "null_hypothesis": "The quadratic term for title_novelty_score has no association with citation count after controlling for the linear term, journal rank, author prestige, publication year, article length, and subject area.",
+    "direction": "quadratic",
+    "features": ["title_novelty_score"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  },
+  {
+    "id": "H-010",
+    "name": "Title Effect Larger Outside T14",
+    "description": "The incremental R-squared attributable to title features is larger for articles in lower-ranked journals than for articles in T14 journals. At T14 journals, author and journal prestige dominate; at lower-ranked journals, title quality may matter more.",
+    "null_hypothesis": "The incremental R-squared for title features does not differ significantly between T14 and non-T14 journal subgroups.",
+    "direction": "subgroup_difference",
+    "features": ["word_count", "has_colon", "has_question_mark", "has_em_dash", "has_comma", "num_punctuation", "subtitle_length_ratio", "tmpl_the_x_of_y", "tmpl_beyond_x", "tmpl_rethinking_x", "tmpl_x_in_age_of_y", "tmpl_toward_x", "tmpl_x_and_y", "tmpl_against_x", "tmpl_defense_of_x", "tmpl_death_of_x", "has_case_name", "has_statute_ref", "has_amendment_ref", "has_jurisdiction", "num_legal_terms", "legal_term_density", "has_neologism", "has_pop_culture", "has_metaphor_signal", "title_novelty_score", "has_alliteration", "sentiment_polarity", "sentiment_subjectivity", "is_provocative", "has_normative_verb", "noun_ratio", "adj_ratio", "verb_ratio", "named_entity_count", "named_entity_density", "abstractness_score"],
+    "dependent_variable": "cite_crossref",
+    "status": "registered"
+  }
+]
