@@ -54,6 +54,7 @@ class SiteConfig:
 # Known journal site configurations.
 # Add new journals here as we discover their URL patterns.
 KNOWN_SITES: list[SiteConfig] = [
+    # --- Original 3 ---
     SiteConfig(
         journal_name="Fordham Law Review",
         archive_url="https://fordhamlawreview.org/issues/",
@@ -65,6 +66,95 @@ KNOWN_SITES: list[SiteConfig] = [
     SiteConfig(
         journal_name="Iowa Law Review",
         archive_url="https://ilr.law.uiowa.edu/online/",
+    ),
+    # --- Discovered 2026-04-16: top-50 journals with accessible sites ---
+    SiteConfig(
+        journal_name="Harvard Law Review",
+        archive_url="https://harvardlawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Yale Law Journal",
+        archive_url="https://www.yalelawjournal.org/issue",
+    ),
+    SiteConfig(
+        journal_name="University of Pennsylvania Law Review",
+        archive_url="https://scholarship.law.upenn.edu/penn_law_review/",
+    ),
+    SiteConfig(
+        journal_name="University of Chicago Law Review",
+        archive_url="https://chicagounbound.uchicago.edu/uclrev/",
+    ),
+    SiteConfig(
+        journal_name="Duke Law Journal",
+        archive_url="https://dlj.law.duke.edu/",
+    ),
+    SiteConfig(
+        journal_name="New York University Law Review",
+        archive_url="https://nyulawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Minnesota Law Review",
+        archive_url="https://www.minnesotalawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Northwestern University Law Review",
+        archive_url="https://scholarlycommons.law.northwestern.edu/nulr/",
+    ),
+    SiteConfig(
+        journal_name="Texas Law Review",
+        archive_url="https://www.texaslawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="UCLA Law Review",
+        archive_url="https://www.uclalawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Boston College Law Review",
+        archive_url="https://bclawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Southern California Law Review",
+        archive_url="https://southerncalifornialawreview.com/",
+    ),
+    SiteConfig(
+        journal_name="George Washington Law Review",
+        archive_url="https://www.gwlr.org/",
+    ),
+    SiteConfig(
+        journal_name="University of Illinois Law Review",
+        archive_url="https://illinoislawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Washington Law Review",
+        archive_url="https://washingtonlawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Wisconsin Law Review",
+        archive_url="https://wlr.law.wisc.edu/",
+    ),
+    SiteConfig(
+        journal_name="William & Mary Law Review",
+        archive_url="https://scholarship.law.wm.edu/wmlr/",
+    ),
+    SiteConfig(
+        journal_name="North Carolina Law Review",
+        archive_url="https://scholarship.law.unc.edu/nclr/",
+    ),
+    SiteConfig(
+        journal_name="UC Law Journal",
+        archive_url="https://uclawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Harvard Journal of Law & Technology",
+        archive_url="https://jolt.law.harvard.edu/",
+    ),
+    SiteConfig(
+        journal_name="Administrative Law Review",
+        archive_url="https://www.administrativelawreview.org/",
+    ),
+    SiteConfig(
+        journal_name="Arizona Law Review",
+        archive_url="https://arizonalawreview.org/",
     ),
 ]
 
