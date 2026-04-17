@@ -1,0 +1,28 @@
+[project]
+name = "teq"
+version = "0.1.0"
+description = "Title Efficiency Quotient — empirical study of law review article titles and citation impact"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas",
+    "spacy",
+    "scikit-learn",
+    "statsmodels",
+    "sqlalchemy",
+    "fastapi",
+    "pydantic",
+    "jupyter",
+    "plotly",
+    "pytest",
+    "httpx",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
