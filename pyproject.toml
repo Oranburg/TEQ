@@ -13,7 +13,6 @@ dependencies = [
     "pydantic",
     "jupyter",
     "plotly",
-    "pytest",
     "httpx",
 ]
 

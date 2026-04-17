@@ -23,18 +23,22 @@ from teq.database import get_session, init_db
 from teq.models import AuditLog, Journal
 
 # ---------------------------------------------------------------------------
-# Adjust these mappings to match the actual W&L CSV column headers.
-# Run `head -1 data/sources/*.csv` to see the actual headers.
+# Column mapping for the 2024-LawJ-Master.csv format.
+# The W&L export has a blank header for the journal name column.
+# Our enriched master CSV uses these headers:
+#   rank, name, combined, impact, journals, currency, cases, scope, editing, format
 # ---------------------------------------------------------------------------
 COLUMN_MAP: dict[str, str] = {
-    "Journal Name": "name",
-    "Rank": "rank",
-    "Combined Score": "combined_score",
-    "Impact Factor": "impact_factor",
-    "Currency Score": "currency_score",
-    "Category": "category",
-    "School": "school",
-    "WL ID": "wl_id",
+    "rank": "rank",
+    "name": "name",
+    "combined": "combined_score",
+    "impact": "impact_factor",
+    "journals": "journals_cited",
+    "currency": "currency_score",
+    "cases": "cases_cited",
+    "scope": "scope",
+    "editing": "editing",
+    "format": "format",
 }
 
 
@@ -47,7 +51,7 @@ def _coerce_float(value) -> float | None:
 
 def _coerce_int(value) -> int | None:
     try:
-        return int(value)
+        return int(float(value))
     except (ValueError, TypeError):
         return None
 
@@ -55,6 +59,7 @@ def _coerce_int(value) -> int | None:
 def load_csv(path: Path, session) -> int:
     """Load a single CSV file and upsert Journal records. Returns count loaded."""
     df = pd.read_csv(path, dtype=str)
+
     # Apply column mapping — only keep columns present in both the CSV and COLUMN_MAP.
     rename = {k: v for k, v in COLUMN_MAP.items() if k in df.columns}
     df = df.rename(columns=rename)
@@ -63,18 +68,10 @@ def load_csv(path: Path, session) -> int:
     for _, row in df.iterrows():
         name = row.get("name")
         if not name or pd.isna(name):
-            continue  # skip rows without a journal name
+            continue
 
-        wl_id = row.get("wl_id")
-        if wl_id is None or pd.isna(wl_id):
-            wl_id = None
-
-        # Look for an existing record by wl_id or name.
-        existing = None
-        if wl_id:
-            existing = session.query(Journal).filter_by(wl_id=wl_id).first()
-        if existing is None:
-            existing = session.query(Journal).filter_by(name=str(name)).first()
+        # Look for an existing record by name.
+        existing = session.query(Journal).filter_by(name=str(name)).first()
 
         if existing is None:
             journal = Journal()
@@ -83,18 +80,22 @@ def load_csv(path: Path, session) -> int:
             journal = existing
 
         journal.name = str(name)
-        if wl_id:
-            journal.wl_id = str(wl_id)
         journal.rank = _coerce_int(row.get("rank"))
         journal.combined_score = _coerce_float(row.get("combined_score"))
         journal.impact_factor = _coerce_float(row.get("impact_factor"))
+        journal.journals_cited = _coerce_int(row.get("journals_cited"))
         journal.currency_score = _coerce_float(row.get("currency_score"))
-        category = row.get("category")
-        if category and not pd.isna(category):
-            journal.category = str(category)
-        school = row.get("school")
-        if school and not pd.isna(school):
-            journal.school = str(school)
+        journal.cases_cited = _coerce_int(row.get("cases_cited"))
+
+        scope = row.get("scope")
+        if scope and not pd.isna(scope):
+            journal.scope = str(scope)
+        editing = row.get("editing")
+        if editing and not pd.isna(editing):
+            journal.editing = str(editing)
+        fmt = row.get("format")
+        if fmt and not pd.isna(fmt):
+            journal.format = str(fmt)
 
         loaded += 1
 

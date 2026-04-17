@@ -36,7 +36,18 @@ class Journal(Base):
     rank: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     combined_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     impact_factor: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    journals_cited: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     currency_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    cases_cited: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    scope: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True
+    )  # General, Specialized
+    editing: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True
+    )  # Student-Edited, Peer-Edited, Refereed
+    format: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True
+    )  # Print, Online
     category: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     school: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
