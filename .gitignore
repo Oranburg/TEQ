@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+
+# Data files over 50MB (tracked via DVC or LFS if needed)
+*.parquet
+*.feather
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# pytest
+.pytest_cache/
+
+# Database
+data/teq.db
+
+# Model artifacts
+models/
+*.pkl
+*.joblib
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (for future dashboard phase)
+node_modules/
