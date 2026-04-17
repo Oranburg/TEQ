@@ -113,3 +113,23 @@ Options:
 1. ORCID enrichment (gives affiliation, which distinguishes faculty from others)
 2. Manual coding
 3. Pattern matching on asterisk conventions (unreliable)
+
+## Literature: Foundational Citation Studies
+
+Two foundational studies on legal citation analysis were ingested into LawJ on 2026-04-17. Both are critical methodological predecessors for TEQ.
+
+**Shapiro (1991):** Fred R. Shapiro, *The Most-Cited Articles from The Yale Law Journal*, 100 Yale L.J. 1449 (1991). The first systematic citation study of a single law journal. Key insight for TEQ: the most-cited articles introduce new VOCABULARY that reshapes legal discourse. This suggests a testable "novelty" feature (does the title contain a neologism or newly coined term?). Also identifies "obliteration" (Merton): work so influential it stops being cited because it becomes common knowledge.
+
+**Landes & Posner (1996):** William M. Landes & Richard A. Posner, *Heavily Cited Articles in Law*, 71 Chi.-Kent L. Rev. 825 (1996). Critiques Shapiro's methodology and provides a citation depreciation model: ln C_i = 3.164 + .365T_i - .017T_i^2, R^2 = .56. Key findings for TEQ:
+- Page length does NOT correlate with citations (r = -0.04)
+- Probability of any article making top 100 most-cited = ~1 in 4,000
+- Doctrinal articles declining in citation share (60% → 26%); interdisciplinary rising
+- Mean author age varies by field (L&E: 36.3, Doctrinal: 45.3)
+- Author ranking (aggregating citations) is more informative than article ranking
+
+**Implications for TEQ design:**
+1. Must control for article age using Landes-Posner depreciation model
+2. "Vocabulary impact" / novelty detection is a high-priority feature
+3. Article type (doctrinal vs. interdisciplinary) is a massive confound — must control
+4. Base rate of ~1 in 4,000 for top-cited articles means predicting supercitedness is unrealistic; focus on relative performance within tiers
+5. Both studies should be cited as intellectual predecessors in the TEQ paper
