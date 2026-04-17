@@ -25,6 +25,59 @@ class Base(DeclarativeBase):
     pass
 
 
+class ArticleAuthor(Base):
+    """Many-to-many join table between Article and Author."""
+
+    __tablename__ = "article_authors"
+
+    article_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("articles.id"), primary_key=True
+    )
+    author_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("authors.id"), primary_key=True
+    )
+    author_position: Mapped[Optional[int]] = mapped_column(
+        Integer, nullable=True
+    )  # 1=first author, 2=second, etc.
+    affiliation_at_publication: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True
+    )  # institution when article was published — key prestige control variable
+
+    article: Mapped["Article"] = relationship(
+        "Article", back_populates="article_authors"
+    )
+    author: Mapped["Author"] = relationship(
+        "Author", back_populates="article_authors"
+    )
+
+
+class Author(Base):
+    """An individual author with optional ORCID/Scholar enrichment data."""
+
+    __tablename__ = "authors"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    family_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    given_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    affiliation: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True
+    )  # current institution
+    orcid: Mapped[Optional[str]] = mapped_column(String, unique=True, nullable=True)
+    scholar_id: Mapped[Optional[str]] = mapped_column(
+        String, unique=True, nullable=True
+    )  # Google Scholar ID
+    h_index: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    total_citations: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow
+    )
+
+    article_authors: Mapped[list["ArticleAuthor"]] = relationship(
+        "ArticleAuthor", back_populates="author"
+    )
+
+
 class Journal(Base):
     """A law review journal entry from W&L rankings data."""
 
@@ -89,6 +142,9 @@ class Article(Base):
     )
     features: Mapped[list["TitleFeature"]] = relationship(
         "TitleFeature", back_populates="article"
+    )
+    article_authors: Mapped[list["ArticleAuthor"]] = relationship(
+        "ArticleAuthor", back_populates="article"
     )
 
 

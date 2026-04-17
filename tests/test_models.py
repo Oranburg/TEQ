@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
 
-from teq.models import Article, Base, Journal, TitleFeature
+from teq.models import Article, ArticleAuthor, Author, Base, Journal, TitleFeature
 
 
 @pytest.fixture
@@ -36,6 +36,8 @@ def test_init_db_creates_tables(engine):
     assert "hypotheses" in table_names
     assert "experiment_runs" in table_names
     assert "audit_log" in table_names
+    assert "authors" in table_names
+    assert "article_authors" in table_names
 
 
 def test_create_and_read_journal(session):
@@ -135,3 +137,53 @@ def test_title_feature_unique_constraint(session):
     session.add(feature2)
     with pytest.raises(IntegrityError):
         session.commit()
+
+
+def test_create_author_and_link_to_article(session):
+    """Can create an Author, link to Article via ArticleAuthor, and read back."""
+    journal = Journal(name="Michigan Law Review", rank=5)
+    session.add(journal)
+    session.flush()
+
+    article = Article(
+        title="Startups, Unicorns, and the Law",
+        journal_id=journal.id,
+        year=2024,
+    )
+    session.add(article)
+    session.flush()
+
+    author = Author(
+        name="Seth C. Oranburg",
+        family_name="Oranburg",
+        given_name="Seth",
+        affiliation="UNH Franklin Pierce School of Law",
+        orcid="0000-0002-1234-5678",
+    )
+    session.add(author)
+    session.flush()
+
+    link = ArticleAuthor(
+        article_id=article.id,
+        author_id=author.id,
+        author_position=1,
+        affiliation_at_publication="Duquesne University School of Law",
+    )
+    session.add(link)
+    session.commit()
+
+    # Read back via relationships
+    result_author = session.query(Author).filter_by(family_name="Oranburg").one()
+    assert result_author.name == "Seth C. Oranburg"
+    assert result_author.orcid == "0000-0002-1234-5678"
+    assert len(result_author.article_authors) == 1
+    assert result_author.article_authors[0].article.title == "Startups, Unicorns, and the Law"
+    assert result_author.article_authors[0].author_position == 1
+    assert result_author.article_authors[0].affiliation_at_publication == "Duquesne University School of Law"
+
+    # Read back from article side
+    result_article = session.query(Article).filter_by(
+        title="Startups, Unicorns, and the Law"
+    ).one()
+    assert len(result_article.article_authors) == 1
+    assert result_article.article_authors[0].author.name == "Seth C. Oranburg"
