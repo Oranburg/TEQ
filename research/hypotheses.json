@@ -95,7 +95,18 @@
     "description": "The incremental R-squared attributable to title features is larger for articles in lower-ranked journals than for articles in T14 journals. At T14 journals, author and journal prestige dominate; at lower-ranked journals, title quality may matter more.",
     "null_hypothesis": "The incremental R-squared for title features does not differ significantly between T14 and non-T14 journal subgroups.",
     "direction": "subgroup_difference",
-    "features": ["word_count", "has_colon", "has_question_mark", "has_em_dash", "has_comma", "num_punctuation", "subtitle_length_ratio", "tmpl_the_x_of_y", "tmpl_beyond_x", "tmpl_rethinking_x", "tmpl_x_in_age_of_y", "tmpl_toward_x", "tmpl_x_and_y", "tmpl_against_x", "tmpl_defense_of_x", "tmpl_death_of_x", "has_case_name", "has_statute_ref", "has_amendment_ref", "has_jurisdiction", "num_legal_terms", "legal_term_density", "has_neologism", "has_pop_culture", "has_metaphor_signal", "title_novelty_score", "has_alliteration", "sentiment_polarity", "sentiment_subjectivity", "is_provocative", "has_normative_verb", "noun_ratio", "adj_ratio", "verb_ratio", "named_entity_count", "named_entity_density", "abstractness_score"],
+    "features": [
+      "word_count", "has_colon", "has_question_mark", "has_em_dash", "has_comma",
+      "num_punctuation", "subtitle_length_ratio",
+      "tmpl_the_x_of_y", "tmpl_beyond_x", "tmpl_rethinking_x", "tmpl_x_in_age_of_y",
+      "tmpl_toward_x", "tmpl_x_and_y", "tmpl_against_x", "tmpl_defense_of_x", "tmpl_death_of_x",
+      "has_case_name", "has_statute_ref", "has_amendment_ref", "has_jurisdiction",
+      "num_legal_terms", "legal_term_density",
+      "has_neologism", "has_pop_culture", "has_metaphor_signal", "title_novelty_score", "has_alliteration",
+      "sentiment_polarity", "sentiment_subjectivity", "is_provocative", "has_normative_verb",
+      "noun_ratio", "adj_ratio", "verb_ratio", "named_entity_count", "named_entity_density",
+      "abstractness_score"
+    ],
     "dependent_variable": "cite_crossref",
     "status": "registered"
   }

@@ -150,7 +150,6 @@ def _has_comma(title: str) -> float:
 
 def _num_punctuation(title: str) -> float:
     """Count of all punctuation characters in the title."""
-    # TODO: implement; currently counts a fixed set of punctuation characters
     punct = set('!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~\u2014\u2013')
     return float(sum(1 for ch in title if ch in punct))
 
@@ -203,8 +202,8 @@ def _tmpl_toward_x(title: str) -> float:
 
 
 def _tmpl_x_and_y(title: str) -> float:
-    """1.0 if the title is exactly two words joined by 'and' (e.g. 'Property and Personhood')."""
-    return 1.0 if _re.match(r"^\w+\s+and\s+\w+$", title, _re.IGNORECASE) else 0.0
+    """1.0 if the title is exactly two alphabetic words joined by 'and' (e.g. 'Property and Personhood')."""
+    return 1.0 if _re.match(r"^[A-Za-z]+\s+and\s+[A-Za-z]+$", title, _re.IGNORECASE) else 0.0
 
 
 def _tmpl_against_x(title: str) -> float:
@@ -230,8 +229,8 @@ def _tmpl_death_of_x(title: str) -> float:
 
 
 def _has_case_name(title: str) -> float:
-    """1.0 if the title contains a 'Party v. Party' construction, else 0.0."""
-    return 1.0 if _re.search(r"\b\w+\s+v\.?\s+\w+", title) else 0.0
+    """1.0 if the title contains a 'Party v. Party' construction with capitalized names, else 0.0."""
+    return 1.0 if _re.search(r"\b[A-Z]\w+\s+v\.?\s+[A-Z]\w+\b", title) else 0.0
 
 
 def _has_statute_ref(title: str) -> float:
